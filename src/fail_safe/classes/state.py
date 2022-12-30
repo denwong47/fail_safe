@@ -182,6 +182,19 @@ class FailSafeState:
     def attach(self, *args: str) -> "FailSafeState":
         """
         Attach variables by :class:`str` name into the state.
+
+        Parameters
+        ----------
+        args
+            Any number of :class:`str`, each being the name of a local variable that
+            needs to be saved on error.
+
+            Any names that are already attached will be ignored.
+
+        Returns
+        -------
+        FailSafeState
+            Returns itself so that these functions can be chained.
         """
         for arg in args:
             if not isinstance(arg, str):
@@ -199,6 +212,19 @@ class FailSafeState:
     def detach(self, *args: str) -> "FailSafeState":
         """
         Detach variables by :class:`str` name from the state.
+
+        Parameters
+        ----------
+        args : str
+            Any number of :class:`str`, each being the name of a local variable that
+            needs to be removed from the :class:`FailSafeState` instance.
+
+            Any names that are not already attached will be ignored.
+
+        Returns
+        -------
+        FailSafeState
+            Returns itself so that these functions can be chained.
         """
         for arg in args:
             if arg in self.attached:
@@ -209,6 +235,26 @@ class FailSafeState:
     def uses(self, *storages: storage.StateStorage) -> "FailSafeState":
         """
         Adds storages to this instance.
+
+        Parameters
+        ----------
+        storages : ~fail_safe.classes.storage.StateStorage
+            Any number of :class:`~fail_safe.classes.storage.StateStorage`, in
+            decreasing order of priority.
+
+            They will all be written to upon error, but when loading, the first storage
+            that returns a state will be used, and the rest disregarded.
+
+        Returns
+        -------
+        FailSafeState
+            Returns itself so that these functions can be chained.
+
+        Raises
+        ------
+        TypeError
+            If any of ``storages`` is not an instance of
+            :class:`~fail_safe.classes.storage.StateStorage`.
         """
         for store in storages:
             if not isinstance(store, storage.StateStorage):
@@ -226,7 +272,8 @@ class FailSafeState:
         """
         Filter to variables that are attached.
 
-        If there is nothing attached, all local variables are included.
+        **Internal function**. If there is nothing attached, all local variables are
+        included.
         """
         if self.attached:
             return {key: value for key, value in locals.items() if key in self.attached}
@@ -236,6 +283,8 @@ class FailSafeState:
     def load_state(self) -> Optional[Dict[str, Any]]:
         """
         Attempt to load a state from storage.
+
+        **Internal function**. Use context manager (i.e. ``with`` statements) instead.
         """
         for store in self.state_stores:
             _loaded_state = store.load(self.name)
@@ -248,6 +297,8 @@ class FailSafeState:
     def save_state(self, state: Dict[str, Any]):
         """
         Save a state to storage.
+
+        **Internal function**. Use context manager (i.e. ``with`` statements) instead.
         """
         with ThreadPoolExecutor() as executor:
             for _ in executor.map(
@@ -258,6 +309,8 @@ class FailSafeState:
     def del_state(self):
         """
         Remove all states from storage.
+
+        **Internal function**. Use context manager (i.e. ``with`` statements) instead.
         """
         with ThreadPoolExecutor() as executor:
             for _ in executor.map(

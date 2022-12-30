@@ -1,5 +1,5 @@
 ===================================================================================
- Documentation for Fail Safe Context Manager
+ Fail Safe Context Manager
 ===================================================================================
 
 .. image:: https://github.com/denwong47/fail_safe/actions/workflows/CI.yml/badge.svg?branch=main
