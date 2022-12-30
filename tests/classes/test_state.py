@@ -12,29 +12,36 @@ class KillIterator(StopIteration):
     """
 
 
-@pytest.mark.parametrize(
-    "stop_at",
-    (
-        0,
-        24,
-        63,
-        64,
-    ),
-)
-def test_state_usage(tmpdir, stop_at):
-    TOTAL: int = 64
-    STOP_AT: int = stop_at
+TOTAL: int = 64
 
-    # This is NOT to be attached.
-    dumb_var = None
 
-    my_records = [
+@pytest.fixture
+def records():
+    return [
         {
             "id": random.randint(0, 2**16),
             "data": "%08x" % random.randint(0, 2**32),
         }
         for _ in range(TOTAL)
     ]
+
+
+@pytest.mark.parametrize(
+    "stop_at",
+    (
+        0,
+        24,
+        TOTAL - 1,
+        TOTAL,
+    ),
+)
+def test_state_usage(tmpdir, stop_at, records):
+    STOP_AT: int = stop_at
+
+    # This is NOT to be attached.
+    dumb_var = None
+
+    my_records = records.copy()
     my_records_iter = iter(my_records)
 
     output = []
@@ -45,7 +52,7 @@ def test_state_usage(tmpdir, stop_at):
             .uses(LocalStorage(tmpdir))
             .attach("my_records", "my_records_iter")
             .attach("output")
-            .attach("TOTAL", "STOP_AT")
+            .attach("STOP_AT")
         ) as state:
             for _i, _item in zip(range(STOP_AT), my_records_iter):
                 """
@@ -68,6 +75,7 @@ def test_state_usage(tmpdir, stop_at):
     del my_records
     del my_records_iter
     del output
+    del dumb_var
 
     assert "my_records" not in locals()
     assert "my_records_iter" not in locals()
@@ -79,12 +87,20 @@ def test_state_usage(tmpdir, stop_at):
     with (
         FailSafeState()
         .uses(LocalStorage(tmpdir))
-        .attach("my_records", "my_records_iter")
+        .attach("my_records_iter")  # my_records is missing here
         .attach("output")
-        .attach("TOTAL", "STOP_AT")
+        .attach("STOP_AT")
     ) as state:
         assert len(tuple(my_records_iter)) == (TOTAL - STOP_AT)
         assert len(output) == STOP_AT
+
+        # This should be filtered out, even if the
+        # state contains the data
+        assert "my_records" not in locals()
+        assert "dumb_var" not in locals()
+
+        # Now we reinstate it after the asserting that the filtering works.
+        my_records = records.copy()
 
         for _original, _new in zip(my_records, output):
             assert _original["id"] == _new["old_id"]
@@ -92,3 +108,26 @@ def test_state_usage(tmpdir, stop_at):
 
             assert "new_id" in _new
             assert _new["new_data"] == _original["data"].upper()
+
+    # ==================================================================================
+    # Because the last execution was successful, there should not be any states to be
+    # loaded
+
+    del my_records
+    del my_records_iter
+    del output
+
+    assert "my_records" not in locals()
+    assert "my_records_iter" not in locals()
+    assert "output" not in locals()
+
+    with (
+        FailSafeState()
+        .uses(LocalStorage(tmpdir))
+        .attach("my_records", "my_records_iter")
+        .attach("output")
+        .attach("STOP_AT")
+    ) as state:
+        assert "my_records" not in locals()
+        assert "my_records_iter" not in locals()
+        assert "output" not in locals()

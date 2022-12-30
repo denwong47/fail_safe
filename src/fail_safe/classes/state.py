@@ -44,7 +44,7 @@ class FailSafeState:
         _loaded_state = self.load_state()
 
         if isinstance(_loaded_state, dict):
-            frames.set_caller_locals(**_loaded_state)
+            frames.set_caller_locals(**self.filter_vars(_loaded_state))
 
         return self
 
