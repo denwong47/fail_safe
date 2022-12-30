@@ -6,8 +6,6 @@
 
 A context manager class that retains data on error, and load from disk upon next execution.
 
-Context manager that caches local scope upon exceptions; loads for next execution.
-
 This class is for iterations over non-Generator iterators that has a high risk of
 failure (e.g. over unsanitised data). Within the context of a
 :class:`FailSafeState`, any unhandled exceptions will cause :class:`FailSafeState`
