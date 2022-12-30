@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+"""
+Storage classes.
+
+These classes perform the actual read/write of pickled data to their respective
+storage types.
+"""
 import abc
 import random
 from datetime import date, datetime
@@ -98,8 +104,10 @@ class LocalStorage(StateStorage):
     def _resolve_path(self, name: str) -> Path:
         path = self.path
 
-        if not path.is_dir():
+        if path.is_file():
             raise OSError(f"`path` must be a directory; {str(path.resolve())} found.")
+        elif not path.exists():
+            raise OSError(f"`path` {str(path.resolve())} does not exists.")
 
         path /= name
 

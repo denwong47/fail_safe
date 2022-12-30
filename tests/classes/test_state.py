@@ -131,3 +131,58 @@ def test_state_usage(tmpdir, stop_at, records):
         assert "my_records" not in locals()
         assert "my_records_iter" not in locals()
         assert "output" not in locals()
+
+
+@pytest.mark.parametrize(
+    "case",
+    range(5),
+)
+def test_state_edge_cases(case, tmpdir):
+    dumb_var = 1
+
+    if case == 0:
+        # Bad directory
+        with pytest.raises(OSError):
+            with (
+                FailSafeState()
+                .uses(store := LocalStorage(tmpdir / "/bad_dir"))
+                .attach("dumb_var")
+            ) as state:
+                pass
+
+    elif case == 1:
+        # No StateStorage used
+        with pytest.raises(ValueError):
+            with (FailSafeState().attach("dumb_var")) as state:
+                pass
+
+    elif case == 2:
+        # No attachments
+        with pytest.raises(KillIterator):
+            with (FailSafeState().uses(LocalStorage(tmpdir))) as state:
+                raise KillIterator("Iterator killed.")
+
+        del dumb_var
+        with (FailSafeState().uses(LocalStorage(tmpdir))) as state:
+            assert dumb_var == 1
+
+    elif case == 3:
+        # Attaching non-string
+        with pytest.raises(TypeError):
+            with (FailSafeState().uses(LocalStorage(tmpdir)).attach(0)) as state:
+                pass
+
+    elif case == 4:
+        # Repeated errors
+        for _ in range(8):
+            with pytest.raises(KillIterator):
+                with (
+                    FailSafeState().uses(LocalStorage(tmpdir)).attach("dumb_var")
+                ) as state:
+                    dumb_var += 1
+                    raise KillIterator("Iterator killed.")
+
+            del dumb_var  # WTF
+
+        with (FailSafeState().uses(LocalStorage(tmpdir)).attach("dumb_var")) as state:
+            assert dumb_var == 9
