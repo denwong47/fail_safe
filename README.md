@@ -3,6 +3,10 @@
 
 ![CI Checks](https://github.com/denwong47/fail_safe/actions/workflows/CI.yml/badge.svg?branch=main)
 
+> ## **Documentation**:
+>
+> **Available at [github pages](https://denwong47.github.io/fail_safe/).**
+
 A context manager class that retains data on error, and load from disk upon next execution.
 
 A context manager class that retains data on error, and load from disk upon next execution.
