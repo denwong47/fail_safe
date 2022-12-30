@@ -4,11 +4,12 @@ services:
       context: .
       dockerfile: docker/fail_safe-dev/Dockerfile
     tty: true
+    env_file:
+      - ./envfile
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT:-development}
     networks:
       - net
-    ports:
-      - 80:80
-      - 443:443
     volumes:
       - '.:/home/app/fail_safe'
 volumes:
