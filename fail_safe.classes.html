@@ -364,42 +364,44 @@ need to start from fresh.</p>
 <p>Ensure you attach the <code class="xref py py-func docutils literal notranslate"><span class="pre">iter()</span></code> wrapped object instead of a <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>,
 <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>.</p>
 <p>For example, this will <strong>NOT</strong> work:</p>
-<blockquote>
-<div><p>from fail_safe import FailSafeState, LocalStorage</p>
-<p>my_list = [ 0, 1, 2, 3 ]</p>
-<dl>
-<dt>with (</dt><dd><p>FailSafeState()
-.uses(LocalStorage())
-.attach(“my_list”)</p>
-</dd>
-<dt>) as state:</dt><dd><p># Assume something causes an error the first time round after
-# we iterated two elements:
-next(my_list)
-next(my_list)</p>
-<p># Upon second execution, <cite>next(my_list)</cite> will start iterating from index
-# <cite>0</cite> again, because <cite>my_list</cite> does not store any iteration pointers.</p>
-</dd>
-</dl>
-</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fail_safe</span> <span class="kn">import</span> <span class="n">FailSafeState</span><span class="p">,</span> <span class="n">LocalStorage</span>
+
+<span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">]</span>
+
+<span class="k">with</span> <span class="p">(</span>
+    <span class="n">FailSafeState</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">uses</span><span class="p">(</span><span class="n">LocalStorage</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="s2">&quot;my_list&quot;</span><span class="p">)</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">state</span><span class="p">:</span>
+    <span class="c1"># Assume something causes an error the first time round after</span>
+    <span class="c1"># we iterated two elements:</span>
+    <span class="nb">next</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
+    <span class="nb">next</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
+
+    <span class="c1"># Upon second execution, `next(my_list)` will start iterating from index</span>
+    <span class="c1"># `0` again, because `my_list` does not store any iteration pointers.</span>
+</pre></div>
+</div>
 <p>Instead, the <code class="xref py py-func docutils literal notranslate"><span class="pre">iter()</span></code> of <code class="docutils literal notranslate"><span class="pre">my_list</span></code> should be passed:</p>
-<blockquote>
-<div><p>from fail_safe import FailSafeState, LocalStorage</p>
-<p>my_list = [ 0, 1, 2, 3 ]
-my_list_iter = iter(my_list)</p>
-<dl>
-<dt>with (</dt><dd><p>FailSafeState()
-.uses(LocalStorage())
-.attach(“my_list_iter”)</p>
-</dd>
-<dt>) as state:</dt><dd><p># Assume something causes an error the first time round after
-# we iterated two elements:
-next(my_list_iter)
-next(my_list_iter)</p>
-<p># Upon second execution, <cite>my_list_iter</cite> will remember the last value it
-# yielded and restart from that position.</p>
-</dd>
-</dl>
-</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fail_safe</span> <span class="kn">import</span> <span class="n">FailSafeState</span><span class="p">,</span> <span class="n">LocalStorage</span>
+
+<span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">]</span>
+<span class="n">my_list_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="p">(</span>
+    <span class="n">FailSafeState</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">uses</span><span class="p">(</span><span class="n">LocalStorage</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="s2">&quot;my_list_iter&quot;</span><span class="p">)</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">state</span><span class="p">:</span>
+    <span class="c1"># Assume something causes an error the first time round after</span>
+    <span class="c1"># we iterated two elements:</span>
+    <span class="nb">next</span><span class="p">(</span><span class="n">my_list_iter</span><span class="p">)</span>
+    <span class="nb">next</span><span class="p">(</span><span class="n">my_list_iter</span><span class="p">)</span>
+
+    <span class="c1"># Upon second execution, `my_list_iter` will remember the last value it</span>
+    <span class="c1"># yielded and restart from that position.</span>
+</pre></div>
+</div>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -504,8 +506,11 @@ storage types.</p>
 <span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#fail_safe.classes.storage.StateStorage.load" title="Permalink to this definition">#</a></dt>
 <dd><p>Load a state from storage.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – File name of the calling <code class="xref py py-class docutils literal notranslate"><span class="pre">FailSafeState</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
 <li><p><em>Dict[str, Any]</em> – If found; otherwise</p></li>
 <li><p><em>None</em> – If not found, or pickling error occured.</p></li>
 </ul>
@@ -520,7 +525,10 @@ storage types.</p>
 <dd><p>Save a state to storage.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>kwargs</strong> – Variables to be saved.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – File name of the calling <code class="xref py py-class docutils literal notranslate"><span class="pre">FailSafeState</span></code>.</p></li>
+<li><p><strong>kwargs</strong> – Variables to be saved.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -532,6 +540,17 @@ storage types.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fail_safe.classes.storage.</span></span><span class="sig-name descname"><span class="pre">LocalStorage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.storage.LocalStorage" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#fail_safe.classes.storage.StateStorage" title="fail_safe.classes.storage.StateStorage"><code class="xref py py-class docutils literal notranslate"><span class="pre">StateStorage</span></code></a></p>
 <p>Load and Save states to the local disk.</p>
+<p>This class directs <code class="xref py py-class docutils literal notranslate"><span class="pre">FailSafeState</span></code> to write the pickled local variables into
+the local disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em><em> | </em><em>pathlib.Path</em>) – <p>Optional. The local folder path to write the file to. Must be a directory.</p>
+<p>The file name used depends on the calling <code class="xref py py-class docutils literal notranslate"><span class="pre">FailSafeState</span></code>;
+<a class="reference internal" href="#fail_safe.classes.storage.LocalStorage" title="fail_safe.classes.storage.LocalStorage"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalStorage</span></code></a> does not record the name of the file it is writing to.</p>
+<p>Defaults to the current working directory in shell.</p>
+</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="fail_safe.classes.storage.LocalStorage.path">
 <span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#fail_safe.classes.storage.LocalStorage.path" title="Permalink to this definition">#</a></dt>
@@ -539,20 +558,77 @@ storage types.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="fail_safe.classes.storage.LocalStorage.load_data">
-<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#fail_safe.classes.storage.LocalStorage.load_data" title="Permalink to this definition">#</a></dt>
-<dd><p>Load the pickled bytes.</p>
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#fail_safe.classes.storage.LocalStorage.load_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Internal function to load data from storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – File name of the calling <code class="xref py py-class docutils literal notranslate"><span class="pre">FailSafeState</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>bytes</em> – If found, otherwise</p></li>
+<li><p><em>None</em> – If not found.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="fail_safe.classes.storage.LocalStorage.save_data">
 <span class="sig-name descname"><span class="pre">save_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.storage.LocalStorage.save_data" title="Permalink to this definition">#</a></dt>
-<dd><p>Save the pickled bytes.</p>
+<dd><p>Internal function to write data to storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – File name of the calling <code class="xref py py-class docutils literal notranslate"><span class="pre">FailSafeState</span></code>.</p></li>
+<li><p><strong>data</strong> (<em>bytes</em>) – Data to be written.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.storage.LocalStorage.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#fail_safe.classes.storage.LocalStorage.load" title="Permalink to this definition">#</a></dt>
+<dd><p>Load a state from storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – File name of the calling <code class="xref py py-class docutils literal notranslate"><span class="pre">FailSafeState</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>Dict[str, Any]</em> – If found; otherwise</p></li>
+<li><p><em>None</em> – If not found, or pickling error occured.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.storage.LocalStorage.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.storage.LocalStorage.save" title="Permalink to this definition">#</a></dt>
+<dd><p>Save a state to storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – File name of the calling <code class="xref py py-class docutils literal notranslate"><span class="pre">FailSafeState</span></code>.</p></li>
+<li><p><strong>kwargs</strong> – Variables to be saved.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="fail_safe.classes.storage.LocalStorage.wipe">
 <span class="sig-name descname"><span class="pre">wipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.storage.LocalStorage.wipe" title="Permalink to this definition">#</a></dt>
-<dd><p>Remove any saved states.</p>
+<dd><p>Remove any saved state from storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – File name of the calling <code class="xref py py-class docutils literal notranslate"><span class="pre">FailSafeState</span></code>.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -804,6 +880,24 @@ storage types.</p>
        <code class="docutils literal notranslate">
         <span class="pre">
          LocalStorage.save_data()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.storage.LocalStorage.load">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         LocalStorage.load()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.storage.LocalStorage.save">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         LocalStorage.save()
         </span>
        </code>
       </a>
