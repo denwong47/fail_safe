@@ -1,0 +1,17 @@
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: docker/fail_safe-dev/Dockerfile
+    tty: true
+    networks:
+      - net
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - '.:/home/app/fail_safe'
+volumes:
+  .:
+networks:
+  net:

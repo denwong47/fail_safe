@@ -1,0 +1,12 @@
+{
+    "folders": [
+            {
+                    "path": "fail_safe"
+            }
+    ],
+    "settings": {
+        "editor.rulers": [
+			88, 120,
+		]
+    }
+}

@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fail_safe"
+authors = [
+    {name = "Denny Wong Pui-chung", email = "denwong47@hotmail.com"},
+]
+version = "0.1.0"
+description = "A context manager class that retains data on error, and load from disk upon next execution."
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies= [
+    "numpy",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "isort",
+    "pre-commit",
+    "pydata-sphinx-theme",
+    "pytest",
+    "sphinx",
+]
+
+[project.urls]
+repository = "https://github.com/denwong47/fail_safe"
+
+[tool.setuptools.packages.find]
+where = ["src", "bin", "data"]
+namespaces = true
+
+[tool.isort]
+py_version = 39
+profile = "black"
+sections=[
+    "FUTURE",
+    "STDLIB",
+    "THIRDPARTY",
+    "FIRSTPARTY",
+    "LOCALFOLDER",
+]
+known_third_party = [
+    "numpy",
+]
+
+[tool.pyright]
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "local: marks tests as only intended to be run locally as opposed to e.g. on GitHub actions",
+]

@@ -1,0 +1,5 @@
+black
+ipython
+isort
+pre-commit
+pytest
