@@ -10,9 +10,8 @@ Subpackages
 -----------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
 
    fail_safe.classes
    fail_safe.config
    fail_safe.utils
-\
