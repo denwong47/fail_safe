@@ -1,0 +1,901 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>fail_safe.classes package &#8212; Fail Safe Context Manager  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sig_word-break.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'fail_safe.classes';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="fail_safe.config package" href="fail_safe.config.html" />
+    <link rel="prev" title="fail_safe package" href="fail_safe.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Fail Safe Context Manager  documentation</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="fail_safe.html">
+                        fail_safe package
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/denwong47/fail_safe" title="GitHub Repository" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub Repository</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="fail_safe.html">
+                        fail_safe package
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/denwong47/fail_safe" title="GitHub Repository" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub Repository</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">fail_safe.classes package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fail_safe.config.html">fail_safe.config package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fail_safe.utils.html">fail_safe.utils package</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="module-fail_safe.classes">
+<span id="fail-safe-classes-package"></span><h1>fail_safe.classes package<a class="headerlink" href="#module-fail_safe.classes" title="Permalink to this heading">#</a></h1>
+<p>Classes declared by this package.</p>
+<p>These fall under two categories:</p>
+<ul class="simple">
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">state</span></code> - Consists only <code class="xref py py-class docutils literal notranslate"><span class="pre">FailSafeState</span></code>, the context manager class
+which is the main purpose of this package.</p></li>
+<li><p><code class="xref py py-mod docutils literal notranslate"><span class="pre">storage</span></code> - <code class="xref py py-class docutils literal notranslate"><span class="pre">StateStorage</span></code> subclasses that performs the actual caching.</p></li>
+</ul>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="module-fail_safe.classes.state">
+<span id="fail-safe-classes-state-module"></span><h2>fail_safe.classes.state module<a class="headerlink" href="#module-fail_safe.classes.state" title="Permalink to this heading">#</a></h2>
+<p>State classes.</p>
+<p>Context manager class that performs the fail safe operations.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fail_safe.classes.state.</span></span><span class="sig-name descname"><span class="pre">FailSafeState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attach</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#fail_safe.classes.storage.StateStorage" title="fail_safe.classes.storage.StateStorage"><span class="pre">StateStorage</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Context manager that caches local scope upon exceptions; loads for next execution.</p>
+<p>This class is for iterations over non-Generator iterators that has a high risk of
+failure (e.g. over unsanitised data). Within the context of a
+<a class="reference internal" href="#fail_safe.classes.state.FailSafeState" title="fail_safe.classes.state.FailSafeState"><code class="xref py py-class docutils literal notranslate"><span class="pre">FailSafeState</span></code></a>, any unhandled exceptions will cause <a class="reference internal" href="#fail_safe.classes.state.FailSafeState" title="fail_safe.classes.state.FailSafeState"><code class="xref py py-class docutils literal notranslate"><span class="pre">FailSafeState</span></code></a>
+to write the attached local variables to <cite>StateStorage</cite>. When re-running the
+same context, <a class="reference internal" href="#fail_safe.classes.state.FailSafeState" title="fail_safe.classes.state.FailSafeState"><code class="xref py py-class docutils literal notranslate"><span class="pre">FailSafeState</span></code></a> will look for pickled data from last time,
+and load the last exception state into <code class="xref py py-func docutils literal notranslate"><span class="pre">locals()</span></code>, so the iteration does not
+need to start from fresh.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fail_safe</span> <span class="kn">import</span> <span class="n">FailSafeState</span><span class="p">,</span> <span class="n">LocalStorage</span>
+
+<span class="n">unclean_data</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span> <span class="p">]</span>
+<span class="n">cleaned_data</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">with</span> <span class="p">(</span>
+    <span class="n">FailSafeState</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">uses</span><span class="p">(</span><span class="n">LocalStorage</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="s2">&quot;cleaned_data&quot;</span><span class="p">)</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">state</span><span class="p">:</span>
+    <span class="c1"># 1st execution:         `FailSafeState` did not find any stored state,</span>
+    <span class="c1">#                        `cleaned_data` is unchanged.</span>
+    <span class="c1"># Subsequent executions: a saved sate is found, `cleaned_data` is replaced.</span>
+
+    <span class="k">for</span> <span class="n">_id</span><span class="p">,</span> <span class="n">_data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unclean_data</span><span class="p">):</span>
+
+        <span class="c1"># This ensures that we won&#39;t repeat whatever we already have cleaned.</span>
+        <span class="k">if</span> <span class="n">_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cleaned_data</span><span class="p">:</span>
+            <span class="c1"># Assume this function may throw unhandled exceptions</span>
+            <span class="c1"># because we can&#39;t foresee all of the possible errors;</span>
+            <span class="c1"># e.g. webscrapping.</span>
+            <span class="c1">#</span>
+            <span class="c1"># Assuming this caused an error on 1st execution.</span>
+            <span class="n">cleaned_data</span><span class="p">[</span><span class="n">_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">some_risky_cleaning_func</span><span class="p">(</span><span class="n">_data</span><span class="p">)</span>
+
+    <span class="c1"># 1st execution:         `FailSafeState` found an unhandled exception,</span>
+    <span class="c1">#                        and saved `cleaned_data` to `LocalStorage()`</span>
+    <span class="c1">#                        before raising the error.</span>
+    <span class="c1"># Subsequent executions: Assuming execution was successful, `FailSafeState`</span>
+    <span class="c1">#                        wipes any saved state files.</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following types are notably not supported:</p>
+<ul class="simple">
+<li><p>Generators</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.DataFrame.iterrows()</span></code> - this is in fact a Generator.</p></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Ensure you attach the <code class="xref py py-func docutils literal notranslate"><span class="pre">iter()</span></code> wrapped object instead of a <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>.</p>
+<p>For example, this will <strong>NOT</strong> work:</p>
+<blockquote>
+<div><p>from fail_safe import FailSafeState, LocalStorage</p>
+<p>my_list = [ 0, 1, 2, 3 ]</p>
+<dl>
+<dt>with (</dt><dd><p>FailSafeState()
+.uses(LocalStorage())
+.attach(“my_list”)</p>
+</dd>
+<dt>) as state:</dt><dd><p># Assume something causes an error the first time round after
+# we iterated two elements:
+next(my_list)
+next(my_list)</p>
+<p># Upon second execution, <cite>next(my_list)</cite> will start iterating from index
+# <cite>0</cite> again, because <cite>my_list</cite> does not store any iteration pointers.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Instead, the <code class="xref py py-func docutils literal notranslate"><span class="pre">iter()</span></code> of <code class="docutils literal notranslate"><span class="pre">my_list</span></code> should be passed:</p>
+<blockquote>
+<div><p>from fail_safe import FailSafeState, LocalStorage</p>
+<p>my_list = [ 0, 1, 2, 3 ]
+my_list_iter = iter(my_list)</p>
+<dl>
+<dt>with (</dt><dd><p>FailSafeState()
+.uses(LocalStorage())
+.attach(“my_list_iter”)</p>
+</dd>
+<dt>) as state:</dt><dd><p># Assume something causes an error the first time round after
+# we iterated two elements:
+next(my_list_iter)
+next(my_list_iter)</p>
+<p># Upon second execution, <cite>my_list_iter</cite> will remember the last value it
+# yielded and restart from that position.</p>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This approach is not without its nuances; mainly to do with the item which
+causes the error in the first place had already been yielded by the iterator,
+and there is no easy way to put it back.</p>
+<p>If we are to re-run the script, the erroring element would be missed.</p>
+<p>Thus it is recommended to rebuild the iterator using the output variables,
+before resuming the iterator.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.name" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.attached">
+<span class="sig-name descname"><span class="pre">attached</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.attached" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.state_stores">
+<span class="sig-name descname"><span class="pre">state_stores</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#fail_safe.classes.storage.StateStorage" title="fail_safe.classes.storage.StateStorage"><span class="pre">StateStorage</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.state_stores" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.attach">
+<span class="sig-name descname"><span class="pre">attach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#fail_safe.classes.state.FailSafeState" title="fail_safe.classes.state.FailSafeState"><span class="pre">FailSafeState</span></a></span></span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.attach" title="Permalink to this definition">#</a></dt>
+<dd><p>Attach variables by <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> name into the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.detach">
+<span class="sig-name descname"><span class="pre">detach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#fail_safe.classes.state.FailSafeState" title="fail_safe.classes.state.FailSafeState"><span class="pre">FailSafeState</span></a></span></span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.detach" title="Permalink to this definition">#</a></dt>
+<dd><p>Detach variables by <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> name from the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.uses">
+<span class="sig-name descname"><span class="pre">uses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">storages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#fail_safe.classes.storage.StateStorage" title="fail_safe.classes.storage.StateStorage"><span class="pre">StateStorage</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#fail_safe.classes.state.FailSafeState" title="fail_safe.classes.state.FailSafeState"><span class="pre">FailSafeState</span></a></span></span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.uses" title="Permalink to this definition">#</a></dt>
+<dd><p>Adds storages to this instance.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.filter_vars">
+<span class="sig-name descname"><span class="pre">filter_vars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.filter_vars" title="Permalink to this definition">#</a></dt>
+<dd><p>Filter to variables that are attached.</p>
+<p>If there is nothing attached, all local variables are included.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.load_state">
+<span class="sig-name descname"><span class="pre">load_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.load_state" title="Permalink to this definition">#</a></dt>
+<dd><p>Attempt to load a state from storage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.save_state">
+<span class="sig-name descname"><span class="pre">save_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.save_state" title="Permalink to this definition">#</a></dt>
+<dd><p>Save a state to storage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.del_state">
+<span class="sig-name descname"><span class="pre">del_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.del_state" title="Permalink to this definition">#</a></dt>
+<dd><p>Remove all states from storage.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-fail_safe.classes.storage">
+<span id="fail-safe-classes-storage-module"></span><h2>fail_safe.classes.storage module<a class="headerlink" href="#module-fail_safe.classes.storage" title="Permalink to this heading">#</a></h2>
+<p>Storage classes.</p>
+<p>These classes perform the actual read/write of pickled data to their respective
+storage types.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="fail_safe.classes.storage.StateStorage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fail_safe.classes.storage.</span></span><span class="sig-name descname"><span class="pre">StateStorage</span></span><a class="headerlink" href="#fail_safe.classes.storage.StateStorage" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract base class for a state storage unit.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.storage.StateStorage.load_data">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#fail_safe.classes.storage.StateStorage.load_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Load the pickled bytes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.storage.StateStorage.save_data">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">save_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.storage.StateStorage.save_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Save the pickled bytes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.storage.StateStorage.wipe">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.storage.StateStorage.wipe" title="Permalink to this definition">#</a></dt>
+<dd><p>Remove any saved states.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.storage.StateStorage.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#fail_safe.classes.storage.StateStorage.load" title="Permalink to this definition">#</a></dt>
+<dd><p>Load a state from storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>Dict[str, Any]</em> – If found; otherwise</p></li>
+<li><p><em>None</em> – If not found, or pickling error occured.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.storage.StateStorage.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.storage.StateStorage.save" title="Permalink to this definition">#</a></dt>
+<dd><p>Save a state to storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – Variables to be saved.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fail_safe.classes.storage.LocalStorage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fail_safe.classes.storage.</span></span><span class="sig-name descname"><span class="pre">LocalStorage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.storage.LocalStorage" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#fail_safe.classes.storage.StateStorage" title="fail_safe.classes.storage.StateStorage"><code class="xref py py-class docutils literal notranslate"><span class="pre">StateStorage</span></code></a></p>
+<p>Load and Save states to the local disk.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fail_safe.classes.storage.LocalStorage.path">
+<span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#fail_safe.classes.storage.LocalStorage.path" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.storage.LocalStorage.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#fail_safe.classes.storage.LocalStorage.load_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Load the pickled bytes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.storage.LocalStorage.save_data">
+<span class="sig-name descname"><span class="pre">save_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.storage.LocalStorage.save_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Save the pickled bytes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.storage.LocalStorage.wipe">
+<span class="sig-name descname"><span class="pre">wipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.storage.LocalStorage.wipe" title="Permalink to this definition">#</a></dt>
+<dd><p>Remove any saved states.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="fail_safe.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">fail_safe package</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="fail_safe.config.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">fail_safe.config package</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-fail_safe.classes.state">
+   fail_safe.classes.state module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       FailSafeState
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.name">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.name
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.attached">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.attached
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.state_stores">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.state_stores
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.attach">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.attach()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.detach">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.detach()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.uses">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.uses()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.filter_vars">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.filter_vars()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.load_state">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.load_state()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.save_state">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.save_state()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.del_state">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.del_state()
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-fail_safe.classes.storage">
+   fail_safe.classes.storage module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fail_safe.classes.storage.StateStorage">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       StateStorage
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.storage.StateStorage.load_data">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         StateStorage.load_data()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.storage.StateStorage.save_data">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         StateStorage.save_data()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.storage.StateStorage.wipe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         StateStorage.wipe()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.storage.StateStorage.load">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         StateStorage.load()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.storage.StateStorage.save">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         StateStorage.save()
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fail_safe.classes.storage.LocalStorage">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       LocalStorage
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.storage.LocalStorage.path">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         LocalStorage.path
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.storage.LocalStorage.load_data">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         LocalStorage.load_data()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.storage.LocalStorage.save_data">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         LocalStorage.save_data()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.storage.LocalStorage.wipe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         LocalStorage.wipe()
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="_sources/fail_safe.classes.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022, Denny Wong Pui-chung, denwong47@hotmail.com.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>
