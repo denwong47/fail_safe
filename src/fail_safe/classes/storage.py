@@ -42,6 +42,11 @@ class StateStorage(abc.ABC):
         """
         Load a state from storage.
 
+        Parameters
+        ----------
+        name : str
+            File name of the calling :class:`FailSafeState`.
+
         Returns
         -------
         Dict[str, Any]
@@ -66,6 +71,9 @@ class StateStorage(abc.ABC):
 
         Parameters
         ----------
+        name : str
+            File name of the calling :class:`FailSafeState`.
+
         kwargs
             Variables to be saved.
         """
@@ -80,6 +88,19 @@ class StateStorage(abc.ABC):
 class LocalStorage(StateStorage):
     """
     Load and Save states to the local disk.
+
+    This class directs :class:`FailSafeState` to write the pickled local variables into
+    the local disk.
+
+    Parameters
+    ----------
+    path : str | pathlib.Path
+        Optional. The local folder path to write the file to. Must be a directory.
+
+        The file name used depends on the calling :class:`FailSafeState`;
+        :class:`LocalStorage` does not record the name of the file it is writing to.
+
+        Defaults to the current working directory in shell.
     """
 
     path: Path
@@ -129,7 +150,23 @@ class LocalStorage(StateStorage):
 
         return Path(path).resolve()
 
-    def load_data(self, name: str) -> bytes:
+    def load_data(self, name: str) -> Optional[bytes]:
+        """
+        Internal function to load data from storage.
+
+        Parameters
+        ----------
+        name : str
+            File name of the calling :class:`FailSafeState`.
+
+        Returns
+        -------
+        bytes
+            If found, otherwise
+
+        None
+            If not found.
+        """
         path = self._resolve_path(name)
 
         if path.is_file():
@@ -138,11 +175,30 @@ class LocalStorage(StateStorage):
         return None
 
     def save_data(self, name: str, data: bytes):
+        """
+        Internal function to write data to storage.
+
+        Parameters
+        ----------
+        name : str
+            File name of the calling :class:`FailSafeState`.
+
+        data : bytes
+            Data to be written.
+        """
         path = self._resolve_path(name)
 
         path.write_bytes(data)
 
     def wipe(self, name: str):
+        """
+        Remove any saved state from storage.
+
+        Parameters
+        ----------
+        name : str
+            File name of the calling :class:`FailSafeState`.
+        """
         path = self._resolve_path(name)
 
         if path.is_file():

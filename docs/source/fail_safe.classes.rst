@@ -23,4 +23,5 @@ fail\_safe.classes.storage module
 .. automodule:: fail_safe.classes.storage
    :members:
    :undoc-members:
+   :inherited-members:
    :show-inheritance:

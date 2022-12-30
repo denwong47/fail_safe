@@ -67,7 +67,7 @@ class FailSafeState:
         Ensure you attach the :func:`iter` wrapped object instead of a :class:`list`,
         :class:`dict` or :class:`tuple`.
 
-        For example, this will **NOT** work:
+        For example, this will **NOT** work::
 
             from fail_safe import FailSafeState, LocalStorage
 
@@ -86,7 +86,7 @@ class FailSafeState:
                 # Upon second execution, `next(my_list)` will start iterating from index
                 # `0` again, because `my_list` does not store any iteration pointers.
 
-        Instead, the :func:`iter` of ``my_list`` should be passed:
+        Instead, the :func:`iter` of ``my_list`` should be passed::
 
             from fail_safe import FailSafeState, LocalStorage
 

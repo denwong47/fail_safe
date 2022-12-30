@@ -16,6 +16,12 @@ same context, :class:`FailSafeState` will look for pickled data from last time,
 and load the last exception state into :func:`locals`, so the iteration does not
 need to start from fresh.
 
+.. note::
+   **TL;DR** The only high level interfaces for this package are:
+
+   - :class:`~fail_safe.classes.state.FailSafeState` - the Context Manager class
+   - :class:`~fail_safe.classes.storage.LocalStorage` - Local Storage implementation
+
 For example::
 
    from fail_safe import FailSafeState, LocalStorage
@@ -54,6 +60,7 @@ For example::
    :caption: Contents:
 
    fail_safe
+
 
 Indices and tables
 ==================
