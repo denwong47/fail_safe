@@ -354,7 +354,7 @@ class FailSafeState:
 
         Examples
         --------
-        A repeating script only pinging an API if no cache was found.
+        A repeating script only pinging an API if no cache was found::
 
             import os
             from fail_safe import FailSafeState, LocalStorage, storage
