@@ -308,7 +308,7 @@ which is the main purpose of this package.</p></li>
 <p>Context manager class that performs the fail safe operations.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fail_safe.classes.state.</span></span><span class="sig-name descname"><span class="pre">FailSafeState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attach</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#fail_safe.classes.storage.StateStorage" title="fail_safe.classes.storage.StateStorage"><span class="pre">StateStorage</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fail_safe.classes.state.</span></span><span class="sig-name descname"><span class="pre">FailSafeState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attach</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#fail_safe.classes.storage.StateStorage" title="fail_safe.classes.storage.StateStorage"><span class="pre">StateStorage</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Context manager that caches local scope upon exceptions; loads for next execution.</p>
 <p>This class is for iterations over non-Generator iterators that has a high risk of
@@ -427,6 +427,11 @@ before resuming the iterator.</p>
 <span class="sig-name descname"><span class="pre">state_stores</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#fail_safe.classes.storage.StateStorage" title="fail_safe.classes.storage.StateStorage"><span class="pre">StateStorage</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.state_stores" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.delete_cache">
+<span class="sig-name descname"><span class="pre">delete_cache</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.delete_cache" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.attach">
 <span class="sig-name descname"><span class="pre">attach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#fail_safe.classes.state.FailSafeState" title="fail_safe.classes.state.FailSafeState"><span class="pre">FailSafeState</span></a></span></span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.attach" title="Permalink to this definition">#</a></dt>
@@ -519,6 +524,63 @@ included.</p>
 <span class="sig-name descname"><span class="pre">del_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.del_state" title="Permalink to this definition">#</a></dt>
 <dd><p>Remove all states from storage.</p>
 <p><strong>Internal function</strong>. Use context manager (i.e. <code class="docutils literal notranslate"><span class="pre">with</span></code> statements) instead.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.wipe">
+<span class="sig-name descname"><span class="pre">wipe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.wipe" title="Permalink to this definition">#</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#fail_safe.classes.state.FailSafeState.del_state" title="fail_safe.classes.state.FailSafeState.del_state"><code class="xref py py-meth docutils literal notranslate"><span class="pre">del_state()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.when_complete">
+<span class="sig-name descname"><span class="pre">when_complete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delete_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#fail_safe.classes.state.FailSafeState" title="fail_safe.classes.state.FailSafeState"><span class="pre">FailSafeState</span></a></span></span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.when_complete" title="Permalink to this definition">#</a></dt>
+<dd><p>State what to do when the context exits successfully.</p>
+<p>By default, all saved states will be wiped upon successful exit of the context.
+In some scenarios, we may want to keep them around (i.e. paid APIs) until a
+forced update is required.</p>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">delete_cache</span></code> to <code class="xref py py-attr docutils literal notranslate"><span class="pre">RETAIN</span></code> will
+allow the cache to persist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>delete_cache</strong> (<em>bool</em>) – To delete cache or not when context exits successfully.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns itself so that these functions can be chained.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#fail_safe.classes.state.FailSafeState" title="fail_safe.classes.state.FailSafeState">FailSafeState</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>A repeating script only pinging an API if no cache was found.</p>
+<blockquote>
+<div><p>import os
+from fail_safe import FailSafeState, LocalStorage, storage</p>
+<p>api_data = None</p>
+<dl class="simple">
+<dt>state = (</dt><dd><p>FailSafeState()
+.uses(LocalStorage())
+.attach(“api_data”)
+.when_complete(storage.RETAIN)</p>
+</dd>
+</dl>
+<p>)</p>
+<p># If we manually instruct a data reset, then we do so before the context.
+if os.environ.get(“RESET_API_DATA”) == “1”:</p>
+<blockquote>
+<div><p>state.wipe()</p>
+</div></blockquote>
+<dl class="simple">
+<dt>with state:</dt><dd><dl class="simple">
+<dt>if not api_data:</dt><dd><p>api_data = some_expensive_api_call()</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p># You can now use <cite>api_data</cite> here; subsequent executions would not trigger
+# <cite>some_expensive_api_call</cite> again.</p>
+</div></blockquote>
 </dd></dl>
 
 </dd></dl>
@@ -772,6 +834,15 @@ the local disk.</p>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.delete_cache">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.delete_cache
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.attach">
        <code class="docutils literal notranslate">
         <span class="pre">
@@ -830,6 +901,24 @@ the local disk.</p>
        <code class="docutils literal notranslate">
         <span class="pre">
          FailSafeState.del_state()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.wipe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.wipe()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.when_complete">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.when_complete()
         </span>
        </code>
       </a>
