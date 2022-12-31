@@ -308,7 +308,7 @@ which is the main purpose of this package.</p></li>
 <p>Context manager class that performs the fail safe operations.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fail_safe.classes.state.</span></span><span class="sig-name descname"><span class="pre">FailSafeState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attach</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#fail_safe.classes.storage.StateStorage" title="fail_safe.classes.storage.StateStorage"><span class="pre">StateStorage</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fail_safe.classes.state.</span></span><span class="sig-name descname"><span class="pre">FailSafeState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attach</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#fail_safe.classes.storage.StateStorage" title="fail_safe.classes.storage.StateStorage"><span class="pre">StateStorage</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_if</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Context manager that caches local scope upon exceptions; loads for next execution.</p>
 <p>This class is for iterations over non-Generator iterators that has a high risk of
@@ -430,6 +430,11 @@ before resuming the iterator.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.delete_cache">
 <span class="sig-name descname"><span class="pre">delete_cache</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.delete_cache" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.reset_condition">
+<span class="sig-name descname"><span class="pre">reset_condition</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.reset_condition" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -567,8 +572,58 @@ allow the cache to persist.</p>
 <span class="p">)</span>
 
 <span class="c1"># If we manually instruct a data reset, then we do so before the context.</span>
+<span class="c1"># NOTE: This can be better done with .reset_if().</span>
 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;RESET_API_DATA&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
     <span class="n">state</span><span class="o">.</span><span class="n">wipe</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">state</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">api_data</span><span class="p">:</span>
+        <span class="n">api_data</span> <span class="o">=</span> <span class="n">some_expensive_api_call</span><span class="p">()</span>
+
+<span class="c1"># You can now use `api_data` here; subsequent executions would not trigger</span>
+<span class="c1"># `some_expensive_api_call` again.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fail_safe.classes.state.FailSafeState.reset_if">
+<span class="sig-name descname"><span class="pre">reset_if</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#fail_safe.classes.state.FailSafeState" title="fail_safe.classes.state.FailSafeState"><span class="pre">FailSafeState</span></a></span></span><a class="headerlink" href="#fail_safe.classes.state.FailSafeState.reset_if" title="Permalink to this definition">#</a></dt>
+<dd><p>Define a condition that if <code class="docutils literal notranslate"><span class="pre">True</span></code> then saved states are ignored.</p>
+<p>Sometimes we will want to ignore the saved state and start afresh if a certain
+condition is met; e.g. if an environment variable is set etc. This modifier
+accepts either a literal <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code> or a parameter-less function to return a
+<cite>bool</cite>, which if <code class="docutils literal notranslate"><span class="pre">True</span></code> at the time of entering the context, will force
+<a class="reference internal" href="#fail_safe.classes.state.FailSafeState" title="fail_safe.classes.state.FailSafeState"><code class="xref py py-class docutils literal notranslate"><span class="pre">FailSafeState</span></code></a> to ignore any saved states.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>condition</strong> (<em>bool</em><em> | </em><em>Callable</em><em>[</em><em>[</em><em>]</em><em>, </em><em>bool</em><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="xref py py-func docutils literal notranslate"><span class="pre">condition()</span></code> is <em>truthy</em>, then saved states will not be
+loaded.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns itself so that these functions can be chained.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#fail_safe.classes.state.FailSafeState" title="fail_safe.classes.state.FailSafeState">FailSafeState</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>A repeating script will fetch an API if no cache was found or an environment
+variable is set:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">fail_safe</span> <span class="kn">import</span> <span class="n">FailSafeState</span><span class="p">,</span> <span class="n">LocalStorage</span><span class="p">,</span> <span class="n">storage</span>
+
+<span class="n">api_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">FailSafeState</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">uses</span><span class="p">(</span><span class="n">LocalStorage</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="s2">&quot;api_data&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">when_complete</span><span class="p">(</span><span class="n">storage</span><span class="o">.</span><span class="n">RETAIN</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">reset_if</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;RESET_API_DATA&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
 
 <span class="k">with</span> <span class="n">state</span><span class="p">:</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">api_data</span><span class="p">:</span>
@@ -840,6 +895,15 @@ the local disk.</p>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.reset_condition">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.reset_condition
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.attach">
        <code class="docutils literal notranslate">
         <span class="pre">
@@ -916,6 +980,15 @@ the local disk.</p>
        <code class="docutils literal notranslate">
         <span class="pre">
          FailSafeState.when_complete()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#fail_safe.classes.state.FailSafeState.reset_if">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         FailSafeState.reset_if()
         </span>
        </code>
       </a>
