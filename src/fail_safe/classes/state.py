@@ -6,7 +6,18 @@ Context manager class that performs the fail safe operations.
 """
 from concurrent.futures import ThreadPoolExecutor
 from types import TracebackType
-from typing import Any, Dict, Iterable, List, Literal, Optional, Tuple, Type, Union
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Iterable,
+    List,
+    Literal,
+    Optional,
+    Tuple,
+    Type,
+    Union,
+)
 
 from ..utils import frames
 from . import storage
@@ -122,6 +133,7 @@ class FailSafeState:
 
     attached: List[Any]
     state_stores: List[storage.StateStorage]
+    reset_condition: Union[bool, Callable[[], bool]]
     delete_cache: bool
 
     def __init__(
@@ -131,6 +143,7 @@ class FailSafeState:
         attach: List[str] = None,
         uses: List[storage.StateStorage] = None,
         delete_cache: bool = storage.DELETE,
+        reset_if: Union[bool, Callable[[], bool]] = False,
     ):
         if not name:
             name = f"savedstate_{frames.get_caller_name()}"
@@ -147,6 +160,7 @@ class FailSafeState:
             self.uses(*uses)
 
         self.delete_cache = delete_cache
+        self.reset_condition = reset_if
 
     def __enter__(self) -> "FailSafeState":
 
@@ -157,10 +171,19 @@ class FailSafeState:
                 "instances."
             )
 
-        _loaded_state = self.load_state()
+        # Get the condition upon which we need to ignore the saved state.
+        _should_reset = (
+            self.reset_condition()
+            if callable(self.reset_condition)
+            else self.reset_condition
+        )
 
-        if isinstance(_loaded_state, dict):
-            frames.set_caller_locals(**self.filter_vars(_loaded_state))
+        # If we are not resetting, then we load the saved states.
+        if not _should_reset:
+            _loaded_state = self.load_state()
+
+            if isinstance(_loaded_state, dict):
+                frames.set_caller_locals(**self.filter_vars(_loaded_state))
 
         self._entered = True
 
@@ -369,6 +392,7 @@ class FailSafeState:
             )
 
             # If we manually instruct a data reset, then we do so before the context.
+            # NOTE: This can be better done with .reset_if().
             if os.environ.get("RESET_API_DATA") == "1":
                 state.wipe()
 
@@ -380,5 +404,57 @@ class FailSafeState:
             # `some_expensive_api_call` again.
         """
         self.delete_cache = delete_cache
+
+        return self
+
+    def reset_if(self, condition: Union[bool, Callable[[], bool]]) -> "FailSafeState":
+        """
+        Define a condition that if ``True`` then saved states are ignored.
+
+        Sometimes we will want to ignore the saved state and start afresh if a certain
+        condition is met; e.g. if an environment variable is set etc. This modifier
+        accepts either a literal :class:`bool` or a parameter-less function to return a
+        `bool`, which if ``True`` at the time of entering the context, will force
+        :class:`FailSafeState` to ignore any saved states.
+
+        Parameters
+        ----------
+        condition : bool | Callable[[], bool]
+            If ``True`` or :func:`condition` is *truthy*, then saved states will not be
+            loaded.
+
+        Returns
+        -------
+        FailSafeState
+            Returns itself so that these functions can be chained.
+
+        Examples
+        --------
+        A repeating script will fetch an API if no cache was found or an environment
+        variable is set::
+
+            import os
+            from fail_safe import FailSafeState, LocalStorage, storage
+
+            api_data = None
+
+            state = (
+                FailSafeState()
+                .uses(LocalStorage())
+                .attach("api_data")
+                .when_complete(storage.RETAIN)
+                .reset_if(
+                    lambda : os.environ.get("RESET_API_DATA") == "1"
+                )
+            )
+
+            with state:
+                if not api_data:
+                    api_data = some_expensive_api_call()
+
+            # You can now use `api_data` here; subsequent executions would not trigger
+            # `some_expensive_api_call` again.
+        """
+        self.reset_condition = condition
 
         return self

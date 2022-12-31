@@ -221,3 +221,35 @@ def test_state_edge_cases(case, tmpdir):
 
         with (FailSafeState().uses(LocalStorage(tmpdir)).attach("dumb_var")) as state:
             assert dumb_var == 9
+
+
+@pytest.mark.parametrize(
+    ("reset_condition", "reset"),
+    [
+        (True, True),
+        (False, False),
+        (lambda: True, True),
+        (lambda: False, False),
+    ],
+)
+def test_state_reset_condition(reset_condition, reset, tmpdir):
+    """
+    See if :meth:`FailSafeState.reset_if` is working.
+    """
+    dumb_var = 0
+    state = (
+        FailSafeState()
+        .uses(LocalStorage(tmpdir))
+        .attach("dumb_var")
+        .when_complete(storage.RETAIN)
+        .reset_if(reset_condition)
+    )
+
+    with state:
+        dumb_var += 1
+
+    # reset variable to 0
+    dumb_var = 0
+
+    with state:
+        assert dumb_var == (0 if reset else 1)
