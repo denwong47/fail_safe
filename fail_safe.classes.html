@@ -553,34 +553,31 @@ allow the cache to persist.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<p>A repeating script only pinging an API if no cache was found.</p>
-<blockquote>
-<div><p>import os
-from fail_safe import FailSafeState, LocalStorage, storage</p>
-<p>api_data = None</p>
-<dl class="simple">
-<dt>state = (</dt><dd><p>FailSafeState()
-.uses(LocalStorage())
-.attach(“api_data”)
-.when_complete(storage.RETAIN)</p>
-</dd>
-</dl>
-<p>)</p>
-<p># If we manually instruct a data reset, then we do so before the context.
-if os.environ.get(“RESET_API_DATA”) == “1”:</p>
-<blockquote>
-<div><p>state.wipe()</p>
-</div></blockquote>
-<dl class="simple">
-<dt>with state:</dt><dd><dl class="simple">
-<dt>if not api_data:</dt><dd><p>api_data = some_expensive_api_call()</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p># You can now use <cite>api_data</cite> here; subsequent executions would not trigger
-# <cite>some_expensive_api_call</cite> again.</p>
-</div></blockquote>
+<p>A repeating script only pinging an API if no cache was found:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">fail_safe</span> <span class="kn">import</span> <span class="n">FailSafeState</span><span class="p">,</span> <span class="n">LocalStorage</span><span class="p">,</span> <span class="n">storage</span>
+
+<span class="n">api_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">FailSafeState</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">uses</span><span class="p">(</span><span class="n">LocalStorage</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="s2">&quot;api_data&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">when_complete</span><span class="p">(</span><span class="n">storage</span><span class="o">.</span><span class="n">RETAIN</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># If we manually instruct a data reset, then we do so before the context.</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;RESET_API_DATA&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">wipe</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">state</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">api_data</span><span class="p">:</span>
+        <span class="n">api_data</span> <span class="o">=</span> <span class="n">some_expensive_api_call</span><span class="p">()</span>
+
+<span class="c1"># You can now use `api_data` here; subsequent executions would not trigger</span>
+<span class="c1"># `some_expensive_api_call` again.</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>
