@@ -122,6 +122,7 @@ class FailSafeState:
 
     attached: List[Any]
     state_stores: List[storage.StateStorage]
+    delete_cache: bool
 
     def __init__(
         self,
@@ -129,6 +130,7 @@ class FailSafeState:
         *,
         attach: List[str] = None,
         uses: List[storage.StateStorage] = None,
+        delete_cache: bool = storage.DELETE,
     ):
         if not name:
             name = f"savedstate_{frames.get_caller_name()}"
@@ -143,6 +145,8 @@ class FailSafeState:
 
         if uses:
             self.uses(*uses)
+
+        self.delete_cache = delete_cache
 
     def __enter__(self) -> "FailSafeState":
 
@@ -170,7 +174,11 @@ class FailSafeState:
     ) -> bool:
         self._entered = False
 
-        if isinstance(exc_type, type) and isinstance(exc_instance, BaseException):
+        if (
+            isinstance(exc_type, type)
+            and isinstance(exc_instance, BaseException)
+            or not self.delete_cache
+        ):
             _suspend_state = self.filter_vars(frames.get_caller_locals())
 
             self.save_state(_suspend_state)
@@ -317,3 +325,60 @@ class FailSafeState:
                 lambda store: store.wipe(self.name), self.state_stores
             ):
                 pass
+
+    wipe = del_state
+    """
+    Alias for :meth:`del_state`.
+    """
+
+    def when_complete(self, delete_cache: bool = storage.DELETE) -> "FailSafeState":
+        """
+        State what to do when the context exits successfully.
+
+        By default, all saved states will be wiped upon successful exit of the context.
+        In some scenarios, we may want to keep them around (i.e. paid APIs) until a
+        forced update is required.
+
+        Setting ``delete_cache`` to :attr:`~fail_safe.classes.storage.RETAIN` will
+        allow the cache to persist.
+
+        Parameters
+        ----------
+        delete_cache : bool
+            To delete cache or not when context exits successfully.
+
+        Returns
+        -------
+        FailSafeState
+            Returns itself so that these functions can be chained.
+
+        Examples
+        --------
+        A repeating script only pinging an API if no cache was found.
+
+            import os
+            from fail_safe import FailSafeState, LocalStorage, storage
+
+            api_data = None
+
+            state = (
+                FailSafeState()
+                .uses(LocalStorage())
+                .attach("api_data")
+                .when_complete(storage.RETAIN)
+            )
+
+            # If we manually instruct a data reset, then we do so before the context.
+            if os.environ.get("RESET_API_DATA") == "1":
+                state.wipe()
+
+            with state:
+                if not api_data:
+                    api_data = some_expensive_api_call()
+
+            # You can now use `api_data` here; subsequent executions would not trigger
+            # `some_expensive_api_call` again.
+        """
+        self.delete_cache = delete_cache
+
+        return self

@@ -8,4 +8,4 @@ A context manager class that retains data on error, and load from disk upon next
 """
 
 from . import classes, utils
-from .classes import FailSafeState, LocalStorage, StateStorage
+from .classes import FailSafeState, LocalStorage, StateStorage, storage

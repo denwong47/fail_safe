@@ -14,6 +14,9 @@ from uuid import uuid1
 
 import dill as pickle
 
+DELETE: bool = True
+RETAIN: bool = False
+
 
 class StateStorage(abc.ABC):
     """

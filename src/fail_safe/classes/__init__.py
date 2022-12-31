@@ -8,5 +8,6 @@ These fall under two categories:
   which is the main purpose of this package.
 - :mod:`storage` - :class:`StateStorage` subclasses that performs the actual caching.
 """
+from . import state, storage
 from .state import FailSafeState
 from .storage import LocalStorage, StateStorage

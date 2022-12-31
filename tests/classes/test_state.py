@@ -3,7 +3,7 @@ import random
 
 import pytest
 
-from fail_safe import FailSafeState, LocalStorage
+from fail_safe import FailSafeState, LocalStorage, storage
 
 
 class KillIterator(StopIteration):
@@ -108,6 +108,41 @@ def test_state_usage(tmpdir, stop_at, records):
 
             assert "new_id" in _new
             assert _new["new_data"] == _original["data"].upper()
+
+    # ==================================================================================
+    # Now we set `when_complete(storage.RETAIN)`, and see if the data persisted.
+
+    with (
+        FailSafeState()
+        .uses(store := LocalStorage(tmpdir))
+        .attach("my_records", "my_records_iter")
+        .attach("output")
+        .attach("STOP_AT")
+        .when_complete(storage.RETAIN)
+    ) as state:
+        # At this point, no cache should exist until __exit__.
+        assert not store.load_data(state.name)
+
+    del my_records
+    del my_records_iter
+    del output
+
+    with (
+        FailSafeState()
+        .uses(LocalStorage(tmpdir))
+        .attach("my_records", "my_records_iter")
+        .attach("output")
+        .attach("STOP_AT")
+    ) as state:
+        # Check if the data is retained even when successful
+        for _original, _new in zip(my_records, output):
+            assert _original["id"] == _new["old_id"]
+            assert _original["data"] == _new["old_data"]
+
+            assert "new_id" in _new
+            assert _new["new_data"] == _original["data"].upper()
+
+        # This time we have when_complete(storage.DELETE) as default
 
     # ==================================================================================
     # Because the last execution was successful, there should not be any states to be
