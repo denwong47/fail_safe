@@ -108,7 +108,7 @@ class LocalStorage(StateStorage):
 
     path: Path
 
-    def __init__(self, path: Union[Path, str]):
+    def __init__(self, path: Union[Path, str] = Path()):
         self.path = self._prepare_path(path)
 
     @staticmethod
